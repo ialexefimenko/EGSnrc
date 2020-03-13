@@ -42,7 +42,13 @@ EGS_InputStruct::EGS_InputStruct() {}
 
 EGS_InputStruct::~EGS_InputStruct() {}
 
-void EGS_InputStruct::addBlockInput(shared_ptr<EGS_BlockInput> block) {
+shared_ptr<EGS_BlockInput> EGS_InputStruct::addBlockInput(string blockTit, bool isReq) {
+    blockInputs.push_back(make_shared<EGS_BlockInput>(blockTit, isReq, nullptr));
+
+    return blockInputs.back();
+}
+
+shared_ptr<EGS_BlockInput> EGS_InputStruct::addBlockInput(shared_ptr<EGS_BlockInput> block) {
     blockInputs.push_back(block);
 }
 
@@ -110,6 +116,10 @@ shared_ptr<EGS_BlockInput> EGS_BlockInput::addBlockInput(string blockTit, bool i
     blockInputs.push_back(make_shared<EGS_BlockInput>(blockTit, isReq, shared_from_this()));
 
     return blockInputs.back();
+}
+
+shared_ptr<EGS_BlockInput> EGS_BlockInput::addBlockInput(shared_ptr<EGS_BlockInput> block) {
+    blockInputs.push_back(block);
 }
 
 vector<shared_ptr<EGS_SingleInput>> EGS_BlockInput::getSingleInputs() {
